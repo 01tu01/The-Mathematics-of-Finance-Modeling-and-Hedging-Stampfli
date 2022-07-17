@@ -1,0 +1,86 @@
+\section{连续时间模型和Black-Scholes公式}
+\subsection{连续时间股票模型}
+本节无习题
+\subsection{离散模型}
+本节无习题
+\subsection{连续模型的分析}
+本节习题为操作题，按照书本步骤操作即可，具体答案略
+\subsection{Black-Scholes公式}
+\begin{enumerate}
+    \item \sol\\
+    见下表：
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+            \hline
+            期权序号 & (a) & (b) & (c) & (d) & (e) & (f) & (g) & (h) \\ \hline
+            价格 & 11.8450  &  1.9493  &  2.3693  &  12.3034  &  4.9206  & 14.4496  &  2.3096  &  1.5473 \\ \hline
+        \end{tabular}
+    \end{table}
+    \item \sol\\
+    见下表：
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+            \hline
+            期权序号 & (a) & (b) & (c) & (d) & (e) & (f) & (g) & (h) \\ \hline
+            价格 & 0.9754  &  7.2926  &  10.0166  &  10.4868  &  11.1416  &  10.7882  &  0.1607  &  1.2367 \\ \hline
+        \end{tabular}
+    \end{table}
+\end{enumerate}
+\subsection{Black-Scholes公式的推导}
+本节无习题
+\subsection{看涨期权与看跌期权平价}
+\begin{enumerate}
+    \item \pro
+    \begin{enumerate}[label=(\alph*)]
+        \item 因为$Z$是标准正态随机变量，所以$\displaystyle f(z)= \frac{1}{\sqrt{2\pi}} \exp\left(-\frac{z^2}{2}\right), z \in \mathbb{R}$，则
+        \begin{align*}
+            E(\e^{\sigma \sqrt{T} Z}) & = \int_{-\infty}^{+\infty} \e^{\sigma \sqrt{t} z} \frac{1}{\sqrt{2\pi}} \exp\left(-\frac{z^2}{2}\right)\,\d z\\
+            & = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{+\infty} \exp \left[-\frac{1}{2}(z^2-2\sigma\sqrt{T}z)\right]\,\d z\\
+            & = \e^{\frac{\sigma^2T}{2}} \underbrace{\int_{-\infty}^{+\infty} \frac{1}{\sqrt{2\pi}} \exp\left[-\frac{(z-\sigma\sqrt{T})^2}{2}\right]\,\d z}_{\sim N(\sigma\sqrt{T}, 1)}\\
+            & = \e^{\frac{\sigma^2T}{2}}
+        \end{align*}
+        所以，对任何$T>0$，$E[\e^{\sigma \sqrt{T} Z}] = \e^{\sigma^2T/2}$.
+        \item 因为$\displaystyle S_T = S_0 \exp\left[\left(r-\frac{\sigma^2}{2}\right)T+\sigma\sqrt{T}Z\right]$，则
+        \begin{align*}
+            E(S_T) & = S_0 E\left\{\exp\left[\left(r-\frac{\sigma^2}{2}\right)T+\sigma\sqrt{T}Z\right]\right\}\\
+            & = S_0 E\left\{\exp\left[\left(r-\frac{\sigma^2}{2}\right)T\right]\exp\left(\sigma\sqrt{T}Z\right)\right\}\\
+            & = S_0 \exp\left[\left(r-\frac{\sigma^2}{2}\right)T\right]E\left[\exp\left(\sigma\sqrt{T}Z\right)\right]\\
+            & = S_0 \exp\left[\left(r-\frac{\sigma^2}{2}\right)T\right]\e^{\frac{\sigma^2T}{2}}\\
+            & = \e^{rT}S_0
+        \end{align*}
+        所以，$E(S_T) = \e^{rT}S_0$.
+    \end{enumerate}
+    \item \pro\\
+    $\displaystyle \because S_T = S_0 \exp\left[\left(r-\frac{\sigma^2}{2}\right)T+\sigma\sqrt{T}Z\right]$，\\
+    $\displaystyle \therefore \ln S_T = \ln S_0 + \left(r-\frac{\sigma^2}{2}\right)T+\sigma\sqrt{T}Z$.\\
+    $\because Z \sim N(0, 1)$，\\
+    $\displaystyle \therefore \ln S_T \sim N\left(\ln S_0 + \left(r-\frac{\sigma^2}{2}\right)T, \sigma^2T\right)$，
+    \begin{align*}
+        P(S_T > X) & = P(\ln S_T > \ln X) = 1-P(\ln S_T \leq \ln X)\\
+        & = 1 - \Phi\left[\frac{\ln X - \ln S_0 - \left(r-\frac{\sigma^2}{2}\right)T}{\sigma\sqrt{T}}\right]\\
+        & = \Phi\left[\frac{\ln \frac{S_0}{X} + \left(r-\frac{\sigma^2}{2}\right)T}{\sigma\sqrt{T}}\right] = N(d_2)
+    \end{align*}
+    所以，$P(S_T>X)=N(d_2)$.
+    \item \pro\\
+    \begin{align*}
+        d_1(d_2) & = \frac{\ln \frac{S_0}{X} + \left(r\pm\frac{\sigma^2}{2}\right)\tau}{\sigma\sqrt{\tau}}\\
+        & = \frac{\ln \frac{F_T\e^{-r\tau}}{X} + \left(r\pm\frac{\sigma^2}{2}\right)\tau}{\sigma\sqrt{\tau}}\\
+        & = \frac{\ln \frac{F_T}{X} - r\tau + \left(r\pm\frac{\sigma^2}{2}\right)\tau}{\sigma\sqrt{\tau}}\\
+        & = \frac{\ln \frac{F_T}{X}}{\sigma\sqrt{\tau}} \pm \sigma\sqrt{\tau}/2
+    \end{align*}
+    \item \omitted
+\end{enumerate}
+\subsection{二叉树模型和连续时间模型}
+\begin{enumerate}
+    \item \sol\\ 令$X=2.7386Z+30$，$P(Z>3.6515)=0.001$.
+    \item \omitted
+    \item \sol\\ $u=1.0166$，$d=0.9837$，$q=0.4979$.
+    \item \omitted
+    \item \sol\\ 用$n=50$步：$u=1.036$，$d=0.9653$，$q = -0.4951$.
+    \item \omitted
+\end{enumerate}
+\subsection{几何布朗运动股价模型应用的注意事项}
+本节无习题
+\clearpage

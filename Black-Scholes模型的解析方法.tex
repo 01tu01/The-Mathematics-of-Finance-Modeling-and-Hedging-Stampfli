@@ -1,0 +1,108 @@
+\section{Black-Scholes模型的解析方法}
+\subsection{微分方程推导的思路}
+本节无习题
+\subsection{$V(S,t)$的扩展}
+本节无习题
+\subsection{$V(S,t)$的扩展与简化}
+本节无习题
+\subsection{投资组合的构造方法}
+\begin{enumerate}
+    \item \sol\\ $a=1$时，这是远期合约.
+    \item \pro\\
+    由于
+    \begin{align*}
+        V_t & = a\e^{at}S^2,\\
+        V_S & = 2\e^{at}S,\\
+        V_{SS} & = 2\e^{at}
+    \end{align*}
+    则
+    \begin{align*}
+        & V_t+\frac{1}{2}\sigma^2S^2V_{SS}+rSV_S - rV\\
+        =&a\e^{at}S^2+\sigma^2S^2\e^{at}+2rS^2\e^{at}-r\e^{at}S^2\\
+        =&\e^{at}S^2(a+\sigma^2+r)=0\\
+        \Rightarrow & a = -(\sigma^2+r)
+    \end{align*}
+    \item \pro\\
+    由于
+    \begin{align*}
+        V_t & = r\e^{rt}G+\e^{rt}G_t = rV+\e^{rt}G_t,\\
+        V_S & = \e^{rt}G_S,\\
+        V_{SS} & = \e^{rt}G_{SS}
+    \end{align*}
+    则
+    \begin{align*}
+        & V_t+\frac{1}{2}\sigma^2S^2V_{SS}+rSV_S - rV\\
+        =&rV+\e^{rt}G_t+\frac{1}{2}\sigma^2S^2\e^{rt}G_S+rS\e^{rt}G_{SS}-rV\\
+        =&\e^{rt}\left(G_t+\frac{1}{2}\sigma^2S^2G_{SS}+rSG_S\right)=0
+    \end{align*}
+    所以，$V(S,t)=\e^{rt}G(S,t)$满足Black-Scholes方程.
+\end{enumerate}
+\subsection{Black-Scholes微分方程求解方法}
+本节无习题
+\subsection{期货期权}
+\begin{enumerate}
+    \item \pro\\
+    方程(6-17)表明：
+    \begin{align*}
+        C & = \e^{-r(T-t)}[FN(d_1)-XN(d_2)],\\
+        d_1 & = \frac{\ln\frac{F}{X}+\frac{\sigma^2(T-t)}{2}}{\sigma \sqrt{T-t}},\\
+        d_2 & = d_1 - \sigma \sqrt{T-t} = \frac{\ln\frac{F}{X}-\frac{\sigma^2(T-t)}{2}}{\sigma \sqrt{T-t}}
+    \end{align*}
+    因为
+    \begin{align*}
+        N'(d_1) & = N'(d_2 + \sigma \sqrt{T-t}) = \frac{1}{\sqrt{2\pi}}\exp\left[-\frac{d_2^2}{2}-\sigma d_2 \sqrt{T-t}-\frac{\sigma^2(T-t)}{2}\right]\\
+        & = N'(d_2)\exp\left[-\sigma d_2 \sqrt{T-t}-\frac{\sigma^2(T-t)}{2}\right]\\
+        & = N'(d_2)\exp\left[\frac{\sigma^2(T-t)}{2}-\ln\frac{F}{X}-\frac{\sigma^2(T-t)}{2}\right]\\
+        & = N'(d_2)\frac{X}{F}
+    \end{align*}
+    所以，$FN'(d_1)=XN'(d_2)$.\\
+    因为\[\frac{\partial d_1}{\partial t}-\frac{\partial d_2}{\partial t}=\frac{\partial (d_1-d_2)}{\partial t}=\frac{\partial }{\partial t}(\sigma\sqrt{T-t})=-\frac{\sigma}{2\sqrt{T-t}}\]
+    所以
+    \begin{align*}
+        C_t & = r\e^{-r(T-t)}[FN(d_1)-XN(d_2)] + \e^{-r(T-t)}\left[FN'(d_1)\frac{\partial d_1}{\partial t}-XN'(d_2)\frac{\partial d_2}{\partial t}\right]\\
+        & = rC + \e^{-r(T-t)}\left[XN'(d_2)\frac{\partial d_1}{\partial t}-XN'(d_2)\frac{\partial d_2}{\partial t}\right]\\
+        & = rC+\e^{-r(T-t)}XN'(d_2)\frac{\partial (d_1-d_2)}{\partial t}\\
+        & = rC-\frac{\e^{-r(T-t)}XN'(d_2)\sigma}{2\sqrt{T-t}}
+    \end{align*}
+    又因为\[\frac{\partial d_1}{\partial F}-\frac{\partial d_2}{\partial F}=\frac{\partial (d_1-d_2)}{\partial F}=\frac{\partial }{\partial F}(\sigma\sqrt{T-t})=0\]
+    所以
+    \begin{align*}
+        C_F & = \e^{-r(T-t)}\left[N(d_1)+FN'(d_1)\frac{\partial d_1}{\partial F}-XN'(d_2)\frac{\partial d_2}{\partial F}\right]\\
+        & = \e^{-r(T-t)}\left[N(d_1)+XN'(d_2)\frac{\partial d_1}{\partial F}-XN'(d_2)\frac{\partial d_2}{\partial F}\right]\\
+        & = \e^{-r(T-t)}\left[N(d_1)+XN'(d_2)\frac{\partial (d_1-d_2)}{\partial F}\right]\\
+        & = \e^{-r(T-t)}N(d_1)
+    \end{align*}
+    因为\[\frac{\partial d_1}{\partial F}=\frac{\partial }{\partial F}\left[\frac{\ln\frac{F}{X}+\frac{\sigma^2(T-t)}{2}}{\sigma \sqrt{T-t}}\right] = \frac{1}{\sigma F \sqrt{T-t}}\]
+    因此\[C_{FF} = \e^{-r(T-t)}N'(d_1)\frac{\partial d_1}{\partial F}=\frac{\e^{-r(T-t)}N'(d_1)}{\sigma F \sqrt{T-t}}\]
+    所以
+    \begin{align*}
+        & C_t + \frac{1}{2}\sigma^2F^2C_{FF}-rC\\
+        = & rC-\frac{\e^{-r(T-t)}XN'(d_2)\sigma}{2\sqrt{T-t}} + \frac{1}{2}\sigma^2F^2\frac{\e^{-r(T-t)}N'(d_1)}{\sigma F \sqrt{T-t}}-rC\\
+        = & -\frac{\e^{-r(T-t)}XN'(d_2)\sigma}{2\sqrt{T-t}}+\frac{\e^{-r(T-t)}FN'(d_1)\sigma}{2\sqrt{T-t}}\\
+        = & \frac{\e^{-r(T-t)}\sigma}{2\sqrt{T-t}}[-XN'(d_2)+FN'(d_1)]=0
+    \end{align*}
+    综上，方程(6-17)中的期权价格满足偏微分方程(6-18).
+    \item \sol\\
+    由题意：\[F=1472, T-\tau=\frac{3}{12}=0.25\text{年},\sigma=0.2,X=1460,r=0.05\]
+    则\[d_1=\frac{\ln\frac{F}{X}+\frac{\sigma^2(T-t)}{2}}{\sigma\sqrt{T-t}}=0.1319,d_2=d_1-\sigma\sqrt{T-t}=0.0319,N(d_1)=0.5525,N(d_2)=0.5127\]
+    于是\[G=\e^{-r(T-t)}[FN(d_1)-XN(d_2)]=63.93\]
+    所以，期权的理论价格是63.93美元.
+    \item \pro\\
+    根据方程(6-10)，有\[V_t + \frac{1}{2}\sigma^2F^2V_{FF}=0,\]
+    于是有
+    \begin{align*}
+        G_t & = r\e^{-r(T-t)}V+\e^{-r(T-t)}V_t=rG+\e^{-r(T-t)}V_t,\\
+        G_F & = \e^{-r(T-t)}V_F,\\
+        G_{FF} & = \e^{-r(T-t)}V_{FF}
+    \end{align*}
+    则有
+    \begin{align*}
+        & G_t + \frac{1}{2}\sigma^2F^2G_{FF}-rG\\
+        = & rG+\e^{-r(T-t)}V_t + \frac{1}{2}\sigma^2F^2\e^{-r(T-t)}V_{FF}-rG\\
+        = & \e^{-r(T-t)}\left(V_t + \frac{1}{2}\sigma^2F^2V_{FF}\right)=0
+    \end{align*}
+    所以，$G(S,t)$满足方程(6-18).
+\end{enumerate}
+\subsection{附录：资产组合的微分}
+本节无习题
+\clearpage
